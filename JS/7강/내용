@@ -1,0 +1,53 @@
+# 7-3
+* localStorage: 브라우저에 저장하기
+* array를 localStorage에 넣기는 불가능 (localStorage에는 오직 텍스트만 저장 가능)
+* saveToDos가 하는 일: toDos array의 내용을 localStorage에 넣는 것
+
+# 7-4
+* JSON.stringify() : JavaScript object나 array나 어떤 것이든 string으로 바꿔준다.
+    -> 이 경우 localStorage에는 남아 있지만 여전히 화면에는 나타나진 않는다.
+* JSON.parse() : string을 array로 만들 수 있음.
+* forEach : array의 각 item에 대해 함수 실행
+    
+** forEach 쓸 때 식 더 짧게 쓰는 방법 (arrow function 이용하기)
+ex) 
+function sayHello(){
+    console.log("hello");
+}
+
+if(saveToDos !== null ){
+    const parsedToDos = JSON.parse(savedToDos);
+    parsedToDos.forEach(sayHello);
+}
+
+===============================
+
+if(saveToDos !== null ){
+    const parsedToDos = JSON.parse(savedToDos);
+    parsedToDos.forEach((item) => console.log("hello", item));
+}
+
+# 7-6
+* Date.now() : 랜덤하게 숫자
+* 화면에서 삭제할 시 localStorage에서도 삭제하고 싶을 때
+    -> text를 저장하여 하는 것보다 id 부여해서 하면 더 편리 (같은 단어가 입력되었을 때 구분하기도 쉬움)
+
+# 7-7 
+* array에서 element 삭제하기
+    -> filter 이용
+* filter : 지우고 싶은 item을 빼고 새 array를 만든다 (item을 지우는게 아니라 item을 제외하는 것)
+        -> 주어진 함수에서 false를 리턴하면 그 item은 제외됨
+ex)
+function sexyFilter(){return false}
+[1,2,3,4,5].filter(sexyFilter)
+결과 => []
+
+# 7-8
+* id가 있는 todo 지우기
+
+function deleteToDo(event){
+    const li = event.target.parentElement;
+    li.remove();
+    toDos = toDos.filter((toDo) => toDo.id !== parseInt(li.id));
+    saveToDos();
+}
